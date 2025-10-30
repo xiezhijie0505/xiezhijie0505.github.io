@@ -4,25 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>小六六王者祝福弹窗（小乔主题）</title>
+  <title>小六六王者祝福弹窗（至尊宝主题）</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
-  <!-- 配置Tailwind自定义颜色（新增小乔粉主题色） -->
+  <!-- 配置Tailwind自定义颜色（至尊宝国风配色） -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#FF4D6D',
-            secondary: '#4CC9F0',
-            accent: '#FFD166',
-            dark: '#2A2A4A',
-            king: '#FFC107',
-            xqPink: '#FF9EBB' // 小乔主题粉（匹配皮肤色调）
+            zzbRed: '#C8102E', // 至尊宝红衣红
+            zzbGold: '#FFD700', // 至尊宝配饰金
+            zzbBlack: '#1A1A1A', // 至尊宝黑发黑甲
+            zzbBlue: '#1E3A8A', // 国风深蓝（点缀用）
           },
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif', 'KaiTi'], // 加入楷体，增强国风感
           },
         },
       }
@@ -35,7 +33,7 @@
         content-visibility: auto;
       }
       .popup-shadow {
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
       }
       .bounce-in {
         animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -46,179 +44,183 @@
       .scale-out {
         animation: scaleOut 0.3s forwards;
       }
-      .popup-cute {
-        border-radius: 20px; /* 可爱圆角 */
-        transform: rotate(1deg); /* 轻微倾斜增加可爱感 */
+      /* 爱心形状弹窗：用clip-path裁剪出爱心，配合旋转增强动态感 */
+      .popup-heart {
+        clip-path: polygon(
+          50% 0%, 61% 35%, 98% 35%, 68% 57%, 
+          79% 91%, 50% 70%, 21% 91%, 32% 57%, 
+          2% 35%, 39% 35%
+        );
+        transform: rotate(2deg);
       }
-      /* 小乔背景图样式：全屏覆盖+半透明，不影响前景内容 */
-      .bg-xq {
-        background-image: url('https://picsum.photos/id/65/1920/1080'); /* 小乔风格图片（可替换为具体小乔皮肤图） */
-        background-size: cover; /* 图片铺满屏幕 */
-        background-position: center; /* 图片居中显示 */
-        background-attachment: fixed; /* 滚动时背景固定 */
+      /* 至尊宝背景图样式：全屏覆盖+暗调遮罩，突出国风氛围 */
+      .bg-zzb {
+        background-image: url('https://picsum.photos/id/237/1920/1080'); /* 替换为至尊宝图片URL即可生效 */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
         position: relative;
       }
-      /* 背景半透明遮罩：避免背景过亮影响文字阅读 */
-      .bg-xq::before {
+      /* 背景遮罩：暗调半透明，避免背景干扰前景内容，同时增强电影感 */
+      .bg-zzb::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(255, 255, 255, 0.7); /* 白色半透明遮罩 */
-        z-index: -1; /* 遮罩在背景图之上，内容之下 */
+        background-color: rgba(26, 26, 26, 0.6); /* 黑色半透明遮罩 */
+        z-index: -1;
       }
     }
     
     @keyframes bounceIn {
       0% { transform: scale(0) rotate(0deg); opacity: 0; }
-      60% { transform: scale(1.1) rotate(-2deg); opacity: 1; }
-      100% { transform: scale(1) rotate(1deg); }
+      60% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+      100% { transform: scale(1) rotate(2deg); }
     }
     
     @keyframes float {
-      0% { transform: translateY(0px) rotate(1deg); }
-      50% { transform: translateY(-10px) rotate(-1deg); }
-      100% { transform: translateY(0px) rotate(1deg); }
+      0% { transform: translateY(0px) rotate(2deg); }
+      50% { transform: translateY(-12px) rotate(-1deg); }
+      100% { transform: translateY(0px) rotate(2deg); }
     }
     
     @keyframes scaleOut {
-      0% { transform: scale(1) rotate(1deg); opacity: 1; }
+      0% { transform: scale(1) rotate(2deg); opacity: 1; }
       100% { transform: scale(0) rotate(0deg); opacity: 0; }
     }
   </style>
 </head>
-<!-- 关键：给body添加小乔背景类，同时设z-index确保内容在最上层 -->
-<body class="bg-xq min-h-screen overflow-hidden relative z-0">
-  <!-- 背景装饰（保留，与小乔背景融合） -->
+<!-- 关键：body添加至尊宝背景类，z-index确保内容层级正常 -->
+<body class="bg-zzb min-h-screen overflow-hidden relative z-0 text-white">
+  <!-- 背景装饰：国风金色光斑，呼应至尊宝配饰 -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-[-2]">
-    <div class="absolute top-10 left-10 w-20 h-20 bg-xqPink/10 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-20 right-10 w-32 h-32 bg-xqPink/10 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-xqPink/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-20 left-1/4 w-32 h-32 bg-zzbGold/20 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-40 right-1/3 w-40 h-40 bg-zzbGold/20 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 right-1/4 w-24 h-24 bg-zzbRed/10 rounded-full blur-3xl"></div>
   </div>
 
-  <!-- 主内容区（z-10确保在背景之上） -->
+  <!-- 主内容区：居中显示，突出至尊宝主题 -->
   <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
-    <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-dark text-center mb-6">
-      点击开启小六六的王者祝福
+    <h1 class="text-[clamp(2rem,6vw,3.5rem)] font-bold text-center mb-8 font-KaiTi">
+      小六六·至尊宝专属祝福
     </h1>
-    <!-- 按钮改为小乔粉主题色，更贴合背景 -->
-    <button id="startBtn" class="bg-xqPink hover:bg-xqPink/90 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-xqPink/50 flex items-center gap-2 text-lg">
-      <i class="fa fa-heart"></i> 开启小乔专属祝福
+    <!-- 按钮：至尊宝红金配色，加入国风图标 -->
+    <button id="startBtn" class="bg-zzbRed hover:bg-zzbRed/90 text-zzbGold font-bold py-5 px-12 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-zzbGold/50 flex items-center gap-3 text-xl font-KaiTi">
+      <i class="fa fa-sword"></i> 开启大圣祝福
     </button>
   </div>
 
   <script>
-    // 专属王者祝福语数组（强化小乔相关祝福）
+    // 至尊宝（猴子）专属祝福语数组，融入角色台词和玩法
     const blessings = [
-      "小六六国服小乔来啦！扇子一挥对面全跪！",
-      "小六六小乔被动叠满，伤害直接拉满！",
-      "小六六小乔大招封路，团战赢麻了！",
-      "小六六小乔走位超秀，上分稳如老狗！",
-      "小六六猴子三棒秒人，配合小乔直接推塔！",
-      "小六六妲己魅惑接控，小乔跟大收人头！",
-      "小六六小乔经济第一，带飞全场没毛病！",
-      "小六六新赛季小乔胜率100%，国服稳了！",
-      "小六六小乔闪现开团，操作直接看呆队友！",
-      "小六六小乔后期伤害爆炸，秒坦克如切菜！",
-      "小六六王者大神，小乔、猴子、妲己轮流Carry！",
-      "小六六玩小乔太猛，对手直接发起投降！"
+      "小六六至尊宝附体！三棒秒C，谁也别想跑！",
+      "小六六猴子身法超秀，越塔强杀还能全身而退！",
+      "小六六大圣娶亲皮肤一穿，胜率直接拉满！",
+      "小六六猴子被动叠满，暴击伤害直接封顶！",
+      "小六六至尊宝大招控住五人，团战直接封神！",
+      "小六六猴子打野节奏无敌，对面野区随便进！",
+      "小六六至尊宝闪现敲脆皮，操作看呆队友！",
+      "小六六新赛季猴子冲国服，上分如闹天宫！",
+      "小六六猴子蹲草秒人，对面辅助都怕了！",
+      "小六六至尊宝后期伤害爆炸，坦克也扛不住三棒！",
+      "小六六猴子带飞全场，队友直呼“大圣威武”！",
+      "小六六至尊宝拿五杀，这波操作必须录屏！"
     ];
     
-    // 颜色数组（新增小乔粉，贴合背景）
+    // 弹窗颜色数组：匹配至尊宝红、金、黑主色调
     const colors = [
-      'bg-xqPink text-white',
-      'bg-king text-dark',
-      'bg-primary text-white',
-      'bg-secondary text-white',
-      'bg-accent text-dark',
-      'bg-white text-xqPink border-2 border-xqPink'
+      'bg-zzbRed text-zzbGold',
+      'bg-zzbGold text-zzbBlack',
+      'bg-zzbBlack text-zzbRed border-2 border-zzbRed',
+      'bg-zzbBlue text-white',
+      'bg-white text-zzbRed border-2 border-zzbRed'
     ];
     
-    // 图标数组（新增爱心，贴合小乔可爱风格）
+    // 图标数组：国风+猴子元素，贴合主题
     const icons = [
-      'fa-heart',
-      'fa-gamepad',
-      'fa-star',
-      'fa-trophy',
-      'fa-rocket',
-      'fa-medal',
-      'fa-crown',
-      'fa-bolt',
-      'fa-flower' // 花朵图标，匹配小乔技能特效
+      'fa-sword', // 金箍棒
+      'fa-crown', // 大圣冠
+      'fa-star', // 暴击星
+      'fa-rocket', // 上分火箭
+      'fa-trophy', // 冠军奖杯
+      'fa-fire', // 火焰（呼应技能特效）
+      'fa-moon-o', // 月下无限连（猴子玩法）
+      'fa-shield' // 护盾（猴子被动）
     ];
     
-    // 获取随机元素
+    // 获取随机元素：从数组中随机选一个值
     const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
     
-    // 创建弹窗函数
+    // 创建爱心形状弹窗的核心函数
     const createPopup = () => {
       const popup = document.createElement('div');
       const blessing = getRandom(blessings);
       const color = getRandom(colors);
       const icon = getRandom(icons);
       
-      // 设置弹窗样式和内容（加大尺寸、可爱形状）
-      popup.className = `fixed p-6 max-w-[280px] popup-shadow bounce-in ${color} z-50 popup-cute`;
+      // 弹窗样式：爱心形状+固定尺寸（宽220px，高220px，适配爱心比例）
+      popup.className = `fixed w-[220px] h-[220px] p-6 popup-shadow bounce-in ${color} z-50 popup-heart flex flex-col justify-center`;
       popup.innerHTML = `
-        <div class="flex items-center gap-3 mb-3">
+        <div class="flex items-center justify-center gap-3 mb-4">
           <i class="fa ${icon} text-2xl"></i>
-          <span class="font-bold text-lg">小六六王者祝福</span>
+          <span class="font-bold text-xl font-KaiTi">大圣祝福</span>
         </div>
-        <p class="text-base">${blessing}</p>
-        <button class="close-btn absolute top-3 right-3 text-current/70 hover:text-current text-lg">
+        <p class="text-center text-base leading-relaxed">${blessing}</p>
+        <!-- 关闭按钮：调整位置，避免遮挡爱心形状 -->
+        <button class="close-btn absolute top-4 right-4 text-current/80 hover:text-current text-lg">
           <i class="fa fa-times"></i>
         </button>
       `;
       
-      // 随机位置
-      const maxX = window.innerWidth - 300;
-      const maxY = window.innerHeight - 200;
+      // 随机位置：确保爱心弹窗不超出屏幕
+      const maxX = window.innerWidth - 240; // 减去弹窗宽度+边距
+      const maxY = window.innerHeight - 240; // 减去弹窗高度+边距
       const x = Math.floor(Math.random() * maxX);
       const y = Math.floor(Math.random() * maxY);
       
       popup.style.left = `${x}px`;
       popup.style.top = `${y}px`;
       
-      // 添加到页面
+      // 将弹窗添加到页面
       document.body.appendChild(popup);
       
-      // 关闭按钮事件
+      // 关闭按钮事件：点击后触发淡出动画，随后删除弹窗
       popup.querySelector('.close-btn').addEventListener('click', () => {
         popup.classList.add('scale-out');
         setTimeout(() => popup.remove(), 300);
       });
       
-      // 自动关闭（缩短时间）
+      // 自动关闭：5-8秒后自动淡出，避免弹窗堆积
       setTimeout(() => {
         popup.classList.add('scale-out');
         setTimeout(() => popup.remove(), 300);
-      }, 4000 + Math.random() * 3000);
+      }, 5000 + Math.random() * 3000);
       
-      // 添加浮动动画
+      // 延迟添加浮动动画：让弹窗弹入后再开始浮动，更自然
       setTimeout(() => {
         popup.classList.add('float');
       }, 500);
     };
     
-    // 开始按钮点击事件（增加弹窗数量、加快弹出速度）
+    // 开始按钮点击事件：触发弹窗生成
     document.getElementById('startBtn').addEventListener('click', () => {
-      // 隐藏按钮
+      // 隐藏按钮和标题：避免遮挡弹窗，增强沉浸感
       document.getElementById('startBtn').classList.add('scale-out');
       document.querySelector('h1').classList.add('scale-out');
       
-      // 更多弹窗、更快速度
-      const totalPopups = 25 + Math.floor(Math.random() * 15);
+      // 生成弹窗：30-45个（数量随机），每180ms一个（弹出更快，更密集）
+      const totalPopups = 30 + Math.floor(Math.random() * 15);
       for (let i = 0; i < totalPopups; i++) {
-        setTimeout(createPopup, i * 200);
+        setTimeout(createPopup, i * 180);
       }
       
-      // 一段时间后重新显示按钮
+      // 弹窗结束后重新显示按钮和标题：支持再次点击触发
       setTimeout(() => {
         document.getElementById('startBtn').classList.remove('scale-out');
         document.querySelector('h1').classList.remove('scale-out');
-      }, totalPopups * 200 + 8000);
+      }, totalPopups * 180 + 10000);
     });
   </script>
 </body>
