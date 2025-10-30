@@ -1,163 +1,197 @@
-import tkinter as tk
-import random
-import time
-import threading
-from tkinter import ttk
-import sys
-import os
-
-class BlessingPopup:
-    def __init__(self):
-        # 祝福语句列表
-        self.blessings = [
-            "愿你每天都开心快乐！",
-            "身体健康，万事如意！",
-            "心想事成，美梦成真！",
-            "笑口常开，好运连连！",
-            "平安喜乐，万事顺遂！",
-            "前程似锦，未来可期！",
-            "幸福美满，阖家欢乐！",
-            "财源广进，富贵吉祥！",
-            "愿你被世界温柔以待！",
-            "每天都有新的小确幸！",
-            "愿所有美好都如期而至！",
-            "一帆风顺，事事顺心！"
-        ]
-        
-        # 窗口颜色
-        self.colors = [
-            "#FF4D6D",  # 粉色
-            "#4CC9F0",  # 蓝色
-            "#FFD166",  # 黄色
-            "#4895EF",  # 亮蓝
-            "#7209B7",  # 紫色
-            "#F72585",  # 亮粉
-            "#3A0CA3",  # 深紫
-            "#4CC9F0"   # 浅蓝
-        ]
-        
-        # 文字颜色
-        self.text_colors = [
-            "white", "white", "black", "white", 
-            "white", "white", "white", "black"
-        ]
-        
-        self.root = tk.Tk()
-        self.root.title("祝福弹窗")
-        self.root.geometry("300x150")
-        self.root.configure(bg="#f0f0f0")
-        
-        # 创建主界面
-        self.create_main_window()
-        
-    def create_main_window(self):
-        """创建主窗口，用于启动弹窗效果"""
-        frame = ttk.Frame(self.root, padding="30")
-        frame.pack(fill=tk.BOTH, expand=True)
-        
-        ttk.Label(
-            frame, 
-            text="点击下方按钮开始接收祝福", 
-            font=("SimHei", 12, "bold")
-        ).pack(pady=10)
-        
-        start_btn = ttk.Button(
-            frame, 
-            text="开始祝福", 
-            command=self.start_blessings,
-            style="Accent.TButton"
-        )
-        start_btn.pack(pady=10)
-        
-        # 配置按钮样式
-        style = ttk.Style()
-        style.configure("Accent.TButton", font=("SimHei", 10, "bold"))
-        
-    def create_popup(self, blessing, color, text_color):
-        """创建单个祝福弹窗"""
-        popup = tk.Toplevel(self.root)
-        popup.overrideredirect(True)  # 无边框窗口
-        popup.attributes("-topmost", True)  # 窗口置顶
-        
-        # 随机位置
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-        x = random.randint(50, screen_width - 250)
-        y = random.randint(50, screen_height - 150)
-        popup.geometry(f"200x100+{x}+{y}")
-        
-        # 设置背景颜色
-        popup.configure(bg=color)
-        
-        # 添加祝福文本
-        label = tk.Label(
-            popup, 
-            text=blessing, 
-            bg=color, 
-            fg=text_color,
-            font=("SimHei", 10),
-            wraplength=180,
-            justify=tk.CENTER
-        )
-        label.pack(expand=True, padx=10, pady=10)
-        
-        # 关闭按钮
-        close_btn = tk.Button(
-            popup,
-            text="×",
-            bg=color,
-            fg=text_color,
-            bd=0,
-            font=("SimHei", 8),
-            command=popup.destroy,
-            width=2,
-            height=1
-        )
-        close_btn.place(x=180, y=5)
-        
-        # 弹窗动画效果
-        self.animate_popup(popup)
-        
-        # 设置自动关闭
-        popup.after(3000 + random.randint(0, 2000), popup.destroy)
-        
-    def animate_popup(self, popup):
-        """弹窗动画效果"""
-        for i in range(1, 11):
-            popup.attributes("-alpha", i/10)
-            popup.update()
-            time.sleep(0.02)
-            
-    def start_blessings(self):
-        """开始弹出祝福窗口"""
-        # 在新线程中运行，避免界面卡顿
-        def run():
-            # 弹出10-20个祝福窗口
-            num_popups = random.randint(10, 20)
-            for i in range(num_popups):
-                # 随机选择祝福、颜色和文字颜色
-                idx = random.randint(0, len(self.colors)-1)
-                blessing = random.choice(self.blessings)
-                color = self.colors[idx]
-                text_color = self.text_colors[idx]
-                
-                # 在主线程中创建弹窗
-                self.root.after(0, self.create_popup, blessing, color, text_color)
-                
-                # 每个弹窗间隔一段时间
-                time.sleep(random.uniform(0.3, 0.8))
-                
-        threading.Thread(target=run, daemon=True).start()
-        
-    def run(self):
-        """运行主程序"""
-        self.root.mainloop()
-
-if __name__ == "__main__":
-    # 确保中文显示正常
-    if sys.platform.startswith('win'):
-        os.environ['TCL_LIBRARY'] = r'C:\Python39\tcl\tcl8.6'  # 根据你的Python安装路径修改
-        os.environ['TK_LIBRARY'] = r'C:\Python39\tcl\tk8.6'
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>弹窗祝福效果</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置Tailwind自定义颜色 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FF4D6D',
+            secondary: '#4CC9F0',
+            accent: '#FFD166',
+            dark: '#2A2A4A',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .popup-shadow {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      }
+      .bounce-in {
+        animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+      .scale-out {
+        animation: scaleOut 0.3s forwards;
+      }
+    }
     
-    app = BlessingPopup()
-    app.run()
+    @keyframes bounceIn {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    @keyframes scaleOut {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen overflow-hidden">
+  <!-- 背景装饰 -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-10 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-accent/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- 主内容区 -->
+  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
+    <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-dark text-center mb-6">
+      点击开始接收祝福
+    </h1>
+    <button id="startBtn" class="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 flex items-center gap-2">
+      <i class="fa fa-heart"></i> 开始祝福
+    </button>
+  </div>
+
+  <script>
+    // 祝福语句数组
+    const blessings = [
+      "愿你每天都开心快乐！",
+      "身体健康，万事如意！",
+      "心想事成，美梦成真！",
+      "笑口常开，好运连连！",
+      "平安喜乐，万事顺遂！",
+      "前程似锦，未来可期！",
+      "幸福美满，阖家欢乐！",
+      "财源广进，富贵吉祥！",
+      "愿你被世界温柔以待！",
+      "每天都有新的小确幸！",
+      "愿所有美好都如期而至！",
+      "一帆风顺，事事顺心！"
+    ];
+    
+    // 颜色数组
+    const colors = [
+      'bg-primary text-white',
+      'bg-secondary text-white',
+      'bg-accent text-dark',
+      'bg-white text-primary border-2 border-primary',
+      'bg-white text-secondary border-2 border-secondary',
+      'bg-dark text-white'
+    ];
+    
+    // 图标数组
+    const icons = [
+      'fa-heart',
+      'fa-star',
+      'fa-gift',
+      'fa-smile-o',
+      'fa-thumbs-up',
+      'fa-sun-o',
+      'fa-moon-o',
+      'fa-leaf',
+      'fa-heart-o'
+    ];
+    
+    // 获取随机元素
+    const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // 创建弹窗函数
+    const createPopup = () => {
+      const popup = document.createElement('div');
+      const blessing = getRandom(blessings);
+      const color = getRandom(colors);
+      const icon = getRandom(icons);
+      
+      // 设置弹窗样式和内容
+      popup.className = `fixed rounded-xl p-4 max-w-[200px] popup-shadow bounce-in ${color} z-50`;
+      popup.innerHTML = `
+        <div class="flex items-center gap-2 mb-2">
+          <i class="fa ${icon}"></i>
+          <span class="font-bold">祝福</span>
+        </div>
+        <p class="text-sm">${blessing}</p>
+        <button class="close-btn absolute top-2 right-2 text-current/70 hover:text-current">
+          <i class="fa fa-times"></i>
+        </button>
+      `;
+      
+      // 随机位置
+      const maxX = window.innerWidth - 220;
+      const maxY = window.innerHeight - 150;
+      const x = Math.floor(Math.random() * maxX);
+      const y = Math.floor(Math.random() * maxY);
+      
+      popup.style.left = `${x}px`;
+      popup.style.top = `${y}px`;
+      
+      // 添加到页面
+      document.body.appendChild(popup);
+      
+      // 关闭按钮事件
+      popup.querySelector('.close-btn').addEventListener('click', () => {
+        popup.classList.add('scale-out');
+        setTimeout(() => popup.remove(), 300);
+      });
+      
+      // 自动关闭
+      setTimeout(() => {
+        popup.classList.add('scale-out');
+        setTimeout(() => popup.remove(), 300);
+      }, 5000 + Math.random() * 5000);
+      
+      // 添加浮动动画
+      setTimeout(() => {
+        popup.classList.add('float');
+      }, 500);
+    };
+    
+    // 开始按钮点击事件
+    document.getElementById('startBtn').addEventListener('click', () => {
+      // 隐藏按钮
+      document.getElementById('startBtn').classList.add('scale-out');
+      document.querySelector('h1').classList.add('scale-out');
+      
+      // 连续创建多个弹窗
+      const totalPopups = 15 + Math.floor(Math.random() * 10);
+      for (let i = 0; i < totalPopups; i++) {
+        setTimeout(createPopup, i * 300);
+      }
+      
+      // 一段时间后重新显示按钮
+      setTimeout(() => {
+        document.getElementById('startBtn').classList.remove('scale-out');
+        document.querySelector('h1').classList.remove('scale-out');
+      }, totalPopups * 300 + 10000);
+    });
+  </script>
+</body>
+</html>
