@@ -1,0 +1,163 @@
+import tkinter as tk
+import random
+import time
+import threading
+from tkinter import ttk
+import sys
+import os
+
+class BlessingPopup:
+    def __init__(self):
+        # 祝福语句列表
+        self.blessings = [
+            "愿你每天都开心快乐！",
+            "身体健康，万事如意！",
+            "心想事成，美梦成真！",
+            "笑口常开，好运连连！",
+            "平安喜乐，万事顺遂！",
+            "前程似锦，未来可期！",
+            "幸福美满，阖家欢乐！",
+            "财源广进，富贵吉祥！",
+            "愿你被世界温柔以待！",
+            "每天都有新的小确幸！",
+            "愿所有美好都如期而至！",
+            "一帆风顺，事事顺心！"
+        ]
+        
+        # 窗口颜色
+        self.colors = [
+            "#FF4D6D",  # 粉色
+            "#4CC9F0",  # 蓝色
+            "#FFD166",  # 黄色
+            "#4895EF",  # 亮蓝
+            "#7209B7",  # 紫色
+            "#F72585",  # 亮粉
+            "#3A0CA3",  # 深紫
+            "#4CC9F0"   # 浅蓝
+        ]
+        
+        # 文字颜色
+        self.text_colors = [
+            "white", "white", "black", "white", 
+            "white", "white", "white", "black"
+        ]
+        
+        self.root = tk.Tk()
+        self.root.title("祝福弹窗")
+        self.root.geometry("300x150")
+        self.root.configure(bg="#f0f0f0")
+        
+        # 创建主界面
+        self.create_main_window()
+        
+    def create_main_window(self):
+        """创建主窗口，用于启动弹窗效果"""
+        frame = ttk.Frame(self.root, padding="30")
+        frame.pack(fill=tk.BOTH, expand=True)
+        
+        ttk.Label(
+            frame, 
+            text="点击下方按钮开始接收祝福", 
+            font=("SimHei", 12, "bold")
+        ).pack(pady=10)
+        
+        start_btn = ttk.Button(
+            frame, 
+            text="开始祝福", 
+            command=self.start_blessings,
+            style="Accent.TButton"
+        )
+        start_btn.pack(pady=10)
+        
+        # 配置按钮样式
+        style = ttk.Style()
+        style.configure("Accent.TButton", font=("SimHei", 10, "bold"))
+        
+    def create_popup(self, blessing, color, text_color):
+        """创建单个祝福弹窗"""
+        popup = tk.Toplevel(self.root)
+        popup.overrideredirect(True)  # 无边框窗口
+        popup.attributes("-topmost", True)  # 窗口置顶
+        
+        # 随机位置
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        x = random.randint(50, screen_width - 250)
+        y = random.randint(50, screen_height - 150)
+        popup.geometry(f"200x100+{x}+{y}")
+        
+        # 设置背景颜色
+        popup.configure(bg=color)
+        
+        # 添加祝福文本
+        label = tk.Label(
+            popup, 
+            text=blessing, 
+            bg=color, 
+            fg=text_color,
+            font=("SimHei", 10),
+            wraplength=180,
+            justify=tk.CENTER
+        )
+        label.pack(expand=True, padx=10, pady=10)
+        
+        # 关闭按钮
+        close_btn = tk.Button(
+            popup,
+            text="×",
+            bg=color,
+            fg=text_color,
+            bd=0,
+            font=("SimHei", 8),
+            command=popup.destroy,
+            width=2,
+            height=1
+        )
+        close_btn.place(x=180, y=5)
+        
+        # 弹窗动画效果
+        self.animate_popup(popup)
+        
+        # 设置自动关闭
+        popup.after(3000 + random.randint(0, 2000), popup.destroy)
+        
+    def animate_popup(self, popup):
+        """弹窗动画效果"""
+        for i in range(1, 11):
+            popup.attributes("-alpha", i/10)
+            popup.update()
+            time.sleep(0.02)
+            
+    def start_blessings(self):
+        """开始弹出祝福窗口"""
+        # 在新线程中运行，避免界面卡顿
+        def run():
+            # 弹出10-20个祝福窗口
+            num_popups = random.randint(10, 20)
+            for i in range(num_popups):
+                # 随机选择祝福、颜色和文字颜色
+                idx = random.randint(0, len(self.colors)-1)
+                blessing = random.choice(self.blessings)
+                color = self.colors[idx]
+                text_color = self.text_colors[idx]
+                
+                # 在主线程中创建弹窗
+                self.root.after(0, self.create_popup, blessing, color, text_color)
+                
+                # 每个弹窗间隔一段时间
+                time.sleep(random.uniform(0.3, 0.8))
+                
+        threading.Thread(target=run, daemon=True).start()
+        
+    def run(self):
+        """运行主程序"""
+        self.root.mainloop()
+
+if __name__ == "__main__":
+    # 确保中文显示正常
+    if sys.platform.startswith('win'):
+        os.environ['TCL_LIBRARY'] = r'C:\Python39\tcl\tcl8.6'  # 根据你的Python安装路径修改
+        os.environ['TK_LIBRARY'] = r'C:\Python39\tcl\tk8.6'
+    
+    app = BlessingPopup()
+    app.run()
