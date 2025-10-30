@@ -1,13 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>小六六王者祝福弹窗</title>
+  <title>小六六王者祝福弹窗（小乔主题）</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
-  <!-- 配置Tailwind自定义颜色 -->
+  <!-- 配置Tailwind自定义颜色（新增小乔粉主题色） -->
   <script>
     tailwind.config = {
       theme: {
@@ -17,7 +18,8 @@
             secondary: '#4CC9F0',
             accent: '#FFD166',
             dark: '#2A2A4A',
-            king: '#FFC107', // 新增王者主题色
+            king: '#FFC107',
+            xqPink: '#FF9EBB' // 小乔主题粉（匹配皮肤色调）
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -48,6 +50,25 @@
         border-radius: 20px; /* 可爱圆角 */
         transform: rotate(1deg); /* 轻微倾斜增加可爱感 */
       }
+      /* 小乔背景图样式：全屏覆盖+半透明，不影响前景内容 */
+      .bg-xq {
+        background-image: url('https://picsum.photos/id/65/1920/1080'); /* 小乔风格图片（可替换为具体小乔皮肤图） */
+        background-size: cover; /* 图片铺满屏幕 */
+        background-position: center; /* 图片居中显示 */
+        background-attachment: fixed; /* 滚动时背景固定 */
+        position: relative;
+      }
+      /* 背景半透明遮罩：避免背景过亮影响文字阅读 */
+      .bg-xq::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7); /* 白色半透明遮罩 */
+        z-index: -1; /* 遮罩在背景图之上，内容之下 */
+      }
     }
     
     @keyframes bounceIn {
@@ -68,53 +89,56 @@
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen overflow-hidden">
-  <!-- 背景装饰 -->
-  <div class="fixed inset-0 pointer-events-none overflow-hidden">
-    <div class="absolute top-10 left-10 w-20 h-20 bg-king/10 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-20 right-10 w-32 h-32 bg-king/10 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-king/10 rounded-full blur-3xl"></div>
+<!-- 关键：给body添加小乔背景类，同时设z-index确保内容在最上层 -->
+<body class="bg-xq min-h-screen overflow-hidden relative z-0">
+  <!-- 背景装饰（保留，与小乔背景融合） -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-[-2]">
+    <div class="absolute top-10 left-10 w-20 h-20 bg-xqPink/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-10 w-32 h-32 bg-xqPink/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-xqPink/10 rounded-full blur-3xl"></div>
   </div>
 
-  <!-- 主内容区 -->
+  <!-- 主内容区（z-10确保在背景之上） -->
   <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
     <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-dark text-center mb-6">
       点击开启小六六的王者祝福
     </h1>
-    <button id="startBtn" class="bg-king hover:bg-king/90 text-dark font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-king/50 flex items-center gap-2 text-lg">
-      <i class="fa fa-gamepad"></i> 开启王者祝福
+    <!-- 按钮改为小乔粉主题色，更贴合背景 -->
+    <button id="startBtn" class="bg-xqPink hover:bg-xqPink/90 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-xqPink/50 flex items-center gap-2 text-lg">
+      <i class="fa fa-heart"></i> 开启小乔专属祝福
     </button>
   </div>
 
   <script>
-    // 专属王者祝福语数组
+    // 专属王者祝福语数组（强化小乔相关祝福）
     const blessings = [
-      "小六六王者超神！国服小乔带飞全场！",
-      "小六六猴子三棒秒人，上分如喝水！",
-      "小六六妲己魅惑全场，连胜停不下来！",
-      "小六六王者段位蹭蹭涨，国服指日可待！",
-      "小六六操作拉满，王者局乱杀！",
-      "小六六新赛季直冲王者，国服英雄拿到手软！",
-      "小六六王者意识顶尖，上分如坐火箭！",
-      "小六六小乔扇子一挥，对面集体团灭！",
-      "小六六猴子棍棍暴击，上分王者不是梦！",
-      "小六六妲己一套秒，王者段位轻松上！",
-      "小六六王者大神，带妹上分从不翻车！",
-      "小六六王者技术太强，队友直呼666！"
+      "小六六国服小乔来啦！扇子一挥对面全跪！",
+      "小六六小乔被动叠满，伤害直接拉满！",
+      "小六六小乔大招封路，团战赢麻了！",
+      "小六六小乔走位超秀，上分稳如老狗！",
+      "小六六猴子三棒秒人，配合小乔直接推塔！",
+      "小六六妲己魅惑接控，小乔跟大收人头！",
+      "小六六小乔经济第一，带飞全场没毛病！",
+      "小六六新赛季小乔胜率100%，国服稳了！",
+      "小六六小乔闪现开团，操作直接看呆队友！",
+      "小六六小乔后期伤害爆炸，秒坦克如切菜！",
+      "小六六王者大神，小乔、猴子、妲己轮流Carry！",
+      "小六六玩小乔太猛，对手直接发起投降！"
     ];
     
-    // 颜色数组（新增王者主题色）
+    // 颜色数组（新增小乔粉，贴合背景）
     const colors = [
+      'bg-xqPink text-white',
       'bg-king text-dark',
       'bg-primary text-white',
       'bg-secondary text-white',
       'bg-accent text-dark',
-      'bg-white text-king border-2 border-king',
-      'bg-dark text-white'
+      'bg-white text-xqPink border-2 border-xqPink'
     ];
     
-    // 图标数组（新增游戏相关图标）
+    // 图标数组（新增爱心，贴合小乔可爱风格）
     const icons = [
+      'fa-heart',
       'fa-gamepad',
       'fa-star',
       'fa-trophy',
@@ -122,8 +146,7 @@
       'fa-medal',
       'fa-crown',
       'fa-bolt',
-      'fa-sword',
-      'fa-shield'
+      'fa-flower' // 花朵图标，匹配小乔技能特效
     ];
     
     // 获取随机元素
