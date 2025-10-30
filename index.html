@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>弹窗祝福效果</title>
+  <title>小六六王者祝福弹窗</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
@@ -17,6 +17,7 @@
             secondary: '#4CC9F0',
             accent: '#FFD166',
             dark: '#2A2A4A',
+            king: '#FFC107', // 新增王者主题色
           },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -43,82 +44,86 @@
       .scale-out {
         animation: scaleOut 0.3s forwards;
       }
+      .popup-cute {
+        border-radius: 20px; /* 可爱圆角 */
+        transform: rotate(1deg); /* 轻微倾斜增加可爱感 */
+      }
     }
     
     @keyframes bounceIn {
-      0% { transform: scale(0); opacity: 0; }
-      60% { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(1); }
+      0% { transform: scale(0) rotate(0deg); opacity: 0; }
+      60% { transform: scale(1.1) rotate(-2deg); opacity: 1; }
+      100% { transform: scale(1) rotate(1deg); }
     }
     
     @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
+      0% { transform: translateY(0px) rotate(1deg); }
+      50% { transform: translateY(-10px) rotate(-1deg); }
+      100% { transform: translateY(0px) rotate(1deg); }
     }
     
     @keyframes scaleOut {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(0); opacity: 0; }
+      0% { transform: scale(1) rotate(1deg); opacity: 1; }
+      100% { transform: scale(0) rotate(0deg); opacity: 0; }
     }
   </style>
 </head>
 <body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen overflow-hidden">
   <!-- 背景装饰 -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden">
-    <div class="absolute top-10 left-10 w-20 h-20 bg-primary/10 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-20 right-10 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-accent/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-10 left-10 w-20 h-20 bg-king/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-10 w-32 h-32 bg-king/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-king/10 rounded-full blur-3xl"></div>
   </div>
 
   <!-- 主内容区 -->
   <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
     <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-dark text-center mb-6">
-      点击开始接收祝福
+      点击开启小六六的王者祝福
     </h1>
-    <button id="startBtn" class="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50 flex items-center gap-2">
-      <i class="fa fa-heart"></i> 开始祝福
+    <button id="startBtn" class="bg-king hover:bg-king/90 text-dark font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-king/50 flex items-center gap-2 text-lg">
+      <i class="fa fa-gamepad"></i> 开启王者祝福
     </button>
   </div>
 
   <script>
-    // 祝福语句数组
+    // 专属王者祝福语数组
     const blessings = [
-      "愿你每天都开心快乐！",
-      "身体健康，万事如意！",
-      "心想事成，美梦成真！",
-      "笑口常开，好运连连！",
-      "平安喜乐，万事顺遂！",
-      "前程似锦，未来可期！",
-      "幸福美满，阖家欢乐！",
-      "财源广进，富贵吉祥！",
-      "愿你被世界温柔以待！",
-      "每天都有新的小确幸！",
-      "愿所有美好都如期而至！",
-      "一帆风顺，事事顺心！"
+      "小六六王者超神！国服小乔带飞全场！",
+      "小六六猴子三棒秒人，上分如喝水！",
+      "小六六妲己魅惑全场，连胜停不下来！",
+      "小六六王者段位蹭蹭涨，国服指日可待！",
+      "小六六操作拉满，王者局乱杀！",
+      "小六六新赛季直冲王者，国服英雄拿到手软！",
+      "小六六王者意识顶尖，上分如坐火箭！",
+      "小六六小乔扇子一挥，对面集体团灭！",
+      "小六六猴子棍棍暴击，上分王者不是梦！",
+      "小六六妲己一套秒，王者段位轻松上！",
+      "小六六王者大神，带妹上分从不翻车！",
+      "小六六王者技术太强，队友直呼666！"
     ];
     
-    // 颜色数组
+    // 颜色数组（新增王者主题色）
     const colors = [
+      'bg-king text-dark',
       'bg-primary text-white',
       'bg-secondary text-white',
       'bg-accent text-dark',
-      'bg-white text-primary border-2 border-primary',
-      'bg-white text-secondary border-2 border-secondary',
+      'bg-white text-king border-2 border-king',
       'bg-dark text-white'
     ];
     
-    // 图标数组
+    // 图标数组（新增游戏相关图标）
     const icons = [
-      'fa-heart',
+      'fa-gamepad',
       'fa-star',
-      'fa-gift',
-      'fa-smile-o',
-      'fa-thumbs-up',
-      'fa-sun-o',
-      'fa-moon-o',
-      'fa-leaf',
-      'fa-heart-o'
+      'fa-trophy',
+      'fa-rocket',
+      'fa-medal',
+      'fa-crown',
+      'fa-bolt',
+      'fa-sword',
+      'fa-shield'
     ];
     
     // 获取随机元素
@@ -131,22 +136,22 @@
       const color = getRandom(colors);
       const icon = getRandom(icons);
       
-      // 设置弹窗样式和内容
-      popup.className = `fixed rounded-xl p-4 max-w-[200px] popup-shadow bounce-in ${color} z-50`;
+      // 设置弹窗样式和内容（加大尺寸、可爱形状）
+      popup.className = `fixed p-6 max-w-[280px] popup-shadow bounce-in ${color} z-50 popup-cute`;
       popup.innerHTML = `
-        <div class="flex items-center gap-2 mb-2">
-          <i class="fa ${icon}"></i>
-          <span class="font-bold">祝福</span>
+        <div class="flex items-center gap-3 mb-3">
+          <i class="fa ${icon} text-2xl"></i>
+          <span class="font-bold text-lg">小六六王者祝福</span>
         </div>
-        <p class="text-sm">${blessing}</p>
-        <button class="close-btn absolute top-2 right-2 text-current/70 hover:text-current">
+        <p class="text-base">${blessing}</p>
+        <button class="close-btn absolute top-3 right-3 text-current/70 hover:text-current text-lg">
           <i class="fa fa-times"></i>
         </button>
       `;
       
       // 随机位置
-      const maxX = window.innerWidth - 220;
-      const maxY = window.innerHeight - 150;
+      const maxX = window.innerWidth - 300;
+      const maxY = window.innerHeight - 200;
       const x = Math.floor(Math.random() * maxX);
       const y = Math.floor(Math.random() * maxY);
       
@@ -162,11 +167,11 @@
         setTimeout(() => popup.remove(), 300);
       });
       
-      // 自动关闭
+      // 自动关闭（缩短时间）
       setTimeout(() => {
         popup.classList.add('scale-out');
         setTimeout(() => popup.remove(), 300);
-      }, 5000 + Math.random() * 5000);
+      }, 4000 + Math.random() * 3000);
       
       // 添加浮动动画
       setTimeout(() => {
@@ -174,23 +179,23 @@
       }, 500);
     };
     
-    // 开始按钮点击事件
+    // 开始按钮点击事件（增加弹窗数量、加快弹出速度）
     document.getElementById('startBtn').addEventListener('click', () => {
       // 隐藏按钮
       document.getElementById('startBtn').classList.add('scale-out');
       document.querySelector('h1').classList.add('scale-out');
       
-      // 连续创建多个弹窗
-      const totalPopups = 15 + Math.floor(Math.random() * 10);
+      // 更多弹窗、更快速度
+      const totalPopups = 25 + Math.floor(Math.random() * 15);
       for (let i = 0; i < totalPopups; i++) {
-        setTimeout(createPopup, i * 300);
+        setTimeout(createPopup, i * 200);
       }
       
       // 一段时间后重新显示按钮
       setTimeout(() => {
         document.getElementById('startBtn').classList.remove('scale-out');
         document.querySelector('h1').classList.remove('scale-out');
-      }, totalPopups * 300 + 10000);
+      }, totalPopups * 200 + 8000);
     });
   </script>
 </body>
