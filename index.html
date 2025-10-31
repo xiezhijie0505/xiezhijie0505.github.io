@@ -1,227 +1,174 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>小六六王者祝福弹窗（至尊宝主题）</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  
-  <!-- 配置Tailwind自定义颜色（至尊宝国风配色） -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            zzbRed: '#C8102E', // 至尊宝红衣红
-            zzbGold: '#FFD700', // 至尊宝配饰金
-            zzbBlack: '#1A1A1A', // 至尊宝黑发黑甲
-            zzbBlue: '#1E3A8A', // 国风深蓝（点缀用）
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif', 'KaiTi'], // 加入楷体，增强国风感
-          },
-        },
-      }
-    }
-  </script>
-  
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .content-auto {
-        content-visibility: auto;
-      }
-      .popup-shadow {
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-      }
-      .bounce-in {
-        animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      .float {
-        animation: float 3s ease-in-out infinite;
-      }
-      .scale-out {
-        animation: scaleOut 0.3s forwards;
-      }
-      /* 爱心形状弹窗：用clip-path裁剪出爱心，配合旋转增强动态感 */
-      .popup-heart {
-        clip-path: polygon(
-          50% 0%, 61% 35%, 98% 35%, 68% 57%, 
-          79% 91%, 50% 70%, 21% 91%, 32% 57%, 
-          2% 35%, 39% 35%
-        );
-        transform: rotate(2deg);
-      }
-      /* 至尊宝背景图样式：全屏覆盖+暗调遮罩，突出国风氛围 */
-      .bg-zzb {
-        background-image: url('https://picsum.photos/id/237/1920/1080'); /* 替换为至尊宝图片URL即可生效 */
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        position: relative;
-      }
-      /* 背景遮罩：暗调半透明，避免背景干扰前景内容，同时增强电影感 */
-      .bg-zzb::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(26, 26, 26, 0.6); /* 黑色半透明遮罩 */
-        z-index: -1;
-      }
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小六六愿意和我打王者吗？</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     
-    @keyframes bounceIn {
-      0% { transform: scale(0) rotate(0deg); opacity: 0; }
-      60% { transform: scale(1.1) rotate(5deg); opacity: 1; }
-      100% { transform: scale(1) rotate(2deg); }
-    }
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6C5CE7',
+                        secondary: '#FD79A8',
+                        happy: '#00B894',
+                        sad: '#D63031'
+                    },
+                    fontFamily: {
+                        game: ['"Comic Sans MS"', '"Marker Felt"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     
-    @keyframes float {
-      0% { transform: translateY(0px) rotate(2deg); }
-      50% { transform: translateY(-12px) rotate(-1deg); }
-      100% { transform: translateY(0px) rotate(2deg); }
-    }
-    
-    @keyframes scaleOut {
-      0% { transform: scale(1) rotate(2deg); opacity: 1; }
-      100% { transform: scale(0) rotate(0deg); opacity: 0; }
-    }
-  </style>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .btn-bounce {
+                animation: bounce 0.5s ease infinite alternate;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            }
+            .scale-transition {
+                transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, font-size 0.3s ease;
+            }
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+        
+        @keyframes celebrate {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .celebration {
+            animation: celebrate 0.5s ease-out forwards;
+        }
+    </style>
 </head>
-<!-- 关键：body添加至尊宝背景类，z-index确保内容层级正常 -->
-<body class="bg-zzb min-h-screen overflow-hidden relative z-0 text-white">
-  <!-- 背景装饰：国风金色光斑，呼应至尊宝配饰 -->
-  <div class="fixed inset-0 pointer-events-none overflow-hidden z-[-2]">
-    <div class="absolute top-20 left-1/4 w-32 h-32 bg-zzbGold/20 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-40 right-1/3 w-40 h-40 bg-zzbGold/20 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/2 right-1/4 w-24 h-24 bg-zzbRed/10 rounded-full blur-3xl"></div>
-  </div>
-
-  <!-- 主内容区：居中显示，突出至尊宝主题 -->
-  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
-    <h1 class="text-[clamp(2rem,6vw,3.5rem)] font-bold text-center mb-8 font-KaiTi">
-      小六六·至尊宝专属祝福
-    </h1>
-    <!-- 按钮：至尊宝红金配色，加入国风图标 -->
-    <button id="startBtn" class="bg-zzbRed hover:bg-zzbRed/90 text-zzbGold font-bold py-5 px-12 rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-zzbGold/50 flex items-center gap-3 text-xl font-KaiTi">
-      <i class="fa fa-sword"></i> 开启大圣祝福
-    </button>
-  </div>
-
-  <script>
-    // 至尊宝（猴子）专属祝福语数组，融入角色台词和玩法
-    const blessings = [
-      "小六六至尊宝附体！三棒秒C，谁也别想跑！",
-      "小六六猴子身法超秀，越塔强杀还能全身而退！",
-      "小六六大圣娶亲皮肤一穿，胜率直接拉满！",
-      "小六六猴子被动叠满，暴击伤害直接封顶！",
-      "小六六至尊宝大招控住五人，团战直接封神！",
-      "小六六猴子打野节奏无敌，对面野区随便进！",
-      "小六六至尊宝闪现敲脆皮，操作看呆队友！",
-      "小六六新赛季猴子冲国服，上分如闹天宫！",
-      "小六六猴子蹲草秒人，对面辅助都怕了！",
-      "小六六至尊宝后期伤害爆炸，坦克也扛不住三棒！",
-      "小六六猴子带飞全场，队友直呼“大圣威武”！",
-      "小六六至尊宝拿五杀，这波操作必须录屏！"
-    ];
+<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen flex flex-col items-center justify-center p-4 font-game">
+    <!-- 标题区域 -->
+    <div class="text-center mb-10">
+        <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-primary text-shadow mb-4">
+            小六六愿意和我打王者吗？
+        </h1>
+        <p class="text-gray-600 text-lg">
+            <i class="fa fa-gamepad text-secondary mr-2"></i>
+            快来做出你的选择吧！
+        </p>
+    </div>
     
-    // 弹窗颜色数组：匹配至尊宝红、金、黑主色调
-    const colors = [
-      'bg-zzbRed text-zzbGold',
-      'bg-zzbGold text-zzbBlack',
-      'bg-zzbBlack text-zzbRed border-2 border-zzbRed',
-      'bg-zzbBlue text-white',
-      'bg-white text-zzbRed border-2 border-zzbRed'
-    ];
-    
-    // 图标数组：国风+猴子元素，贴合主题
-    const icons = [
-      'fa-sword', // 金箍棒
-      'fa-crown', // 大圣冠
-      'fa-star', // 暴击星
-      'fa-rocket', // 上分火箭
-      'fa-trophy', // 冠军奖杯
-      'fa-fire', // 火焰（呼应技能特效）
-      'fa-moon-o', // 月下无限连（猴子玩法）
-      'fa-shield' // 护盾（猴子被动）
-    ];
-    
-    // 获取随机元素：从数组中随机选一个值
-    const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
-    
-    // 创建爱心形状弹窗的核心函数
-    const createPopup = () => {
-      const popup = document.createElement('div');
-      const blessing = getRandom(blessings);
-      const color = getRandom(colors);
-      const icon = getRandom(icons);
-      
-      // 弹窗样式：爱心形状+固定尺寸（宽220px，高220px，适配爱心比例）
-      popup.className = `fixed w-[220px] h-[220px] p-6 popup-shadow bounce-in ${color} z-50 popup-heart flex flex-col justify-center`;
-      popup.innerHTML = `
-        <div class="flex items-center justify-center gap-3 mb-4">
-          <i class="fa ${icon} text-2xl"></i>
-          <span class="font-bold text-xl font-KaiTi">大圣祝福</span>
-        </div>
-        <p class="text-center text-base leading-relaxed">${blessing}</p>
-        <!-- 关闭按钮：调整位置，避免遮挡爱心形状 -->
-        <button class="close-btn absolute top-4 right-4 text-current/80 hover:text-current text-lg">
-          <i class="fa fa-times"></i>
+    <!-- 按钮区域 -->
+    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-10">
+        <!-- 愿意按钮 -->
+        <button id="yesBtn" class="bg-happy hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-xl shadow-lg transform hover:scale-105 transition-all duration-300 btn-bounce">
+            <i class="fa fa-smile-o mr-2"></i>愿意
         </button>
-      `;
-      
-      // 随机位置：确保爱心弹窗不超出屏幕
-      const maxX = window.innerWidth - 240; // 减去弹窗宽度+边距
-      const maxY = window.innerHeight - 240; // 减去弹窗高度+边距
-      const x = Math.floor(Math.random() * maxX);
-      const y = Math.floor(Math.random() * maxY);
-      
-      popup.style.left = `${x}px`;
-      popup.style.top = `${y}px`;
-      
-      // 将弹窗添加到页面
-      document.body.appendChild(popup);
-      
-      // 关闭按钮事件：点击后触发淡出动画，随后删除弹窗
-      popup.querySelector('.close-btn').addEventListener('click', () => {
-        popup.classList.add('scale-out');
-        setTimeout(() => popup.remove(), 300);
-      });
-      
-      // 自动关闭：5-8秒后自动淡出，避免弹窗堆积
-      setTimeout(() => {
-        popup.classList.add('scale-out');
-        setTimeout(() => popup.remove(), 300);
-      }, 5000 + Math.random() * 3000);
-      
-      // 延迟添加浮动动画：让弹窗弹入后再开始浮动，更自然
-      setTimeout(() => {
-        popup.classList.add('float');
-      }, 500);
-    };
+        
+        <!-- 不愿意按钮 -->
+        <button id="noBtn" class="bg-sad hover:bg-red-600 text-white font-bold py-4 px-10 rounded-full text-xl shadow-lg transform hover:scale-105 transition-all duration-300 scale-transition" 
+                style="width: 160px; height: 60px; font-size: 1.25rem;">
+            <i class="fa fa-frown-o mr-2"></i>不愿意
+        </button>
+    </div>
     
-    // 开始按钮点击事件：触发弹窗生成
-    document.getElementById('startBtn').addEventListener('click', () => {
-      // 隐藏按钮和标题：避免遮挡弹窗，增强沉浸感
-      document.getElementById('startBtn').classList.add('scale-out');
-      document.querySelector('h1').classList.add('scale-out');
-      
-      // 生成弹窗：30-45个（数量随机），每180ms一个（弹出更快，更密集）
-      const totalPopups = 30 + Math.floor(Math.random() * 15);
-      for (let i = 0; i < totalPopups; i++) {
-        setTimeout(createPopup, i * 180);
-      }
-      
-      // 弹窗结束后重新显示按钮和标题：支持再次点击触发
-      setTimeout(() => {
-        document.getElementById('startBtn').classList.remove('scale-out');
-        document.querySelector('h1').classList.remove('scale-out');
-      }, totalPopups * 180 + 10000);
-    });
-  </script>
+    <!-- 结果显示区域 -->
+    <div id="result" class="hidden text-center mt-8">
+        <div class="celebration">
+            <h2 class="text-[clamp(1.5rem,4vw,2.5rem)] font-bold text-happy mb-4">
+                <i class="fa fa-star text-yellow-400 animate-pulse"></i>
+                太棒了！高手带我飞！
+                <i class="fa fa-star text-yellow-400 animate-pulse"></i>
+            </h2>
+            <div class="flex justify-center gap-4 mt-6">
+                <i class="fa fa-trophy text-yellow-500 text-5xl"></i>
+                <i class="fa fa-fire text-orange-500 text-5xl"></i>
+                <i class="fa fa-bolt text-blue-500 text-5xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 王者背景图 -->
+    <div class="absolute bottom-0 right-0 w-40 h-40 opacity-10 pointer-events-none">
+        <i class="fa fa-gamepad text-[10rem] text-primary/20"></i>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const result = document.getElementById('result');
+        
+        // 初始按钮大小和位置
+        let currentWidth = 160;
+        let currentHeight = 60;
+        let currentFontSize = 1.25;
+        let isMoving = false;
+        
+        // "愿意"按钮点击事件
+        yesBtn.addEventListener('click', () => {
+            // 隐藏按钮，显示结果
+            yesBtn.classList.add('hidden');
+            noBtn.classList.add('hidden');
+            result.classList.remove('hidden');
+            
+            // 播放庆祝音效（可选）
+            // const audio = new Audio('celebration.mp3');
+            // audio.play().catch(e => console.log('无法播放音效:', e));
+        });
+        
+        // "不愿意"按钮鼠标悬停事件 - 让按钮移动
+        noBtn.addEventListener('mouseover', () => {
+            if (isMoving) return;
+            
+            // 随机生成新位置，确保按钮在可视范围内
+            const maxX = window.innerWidth - currentWidth - 40;
+            const maxY = window.innerHeight - currentHeight - 40;
+            
+            const newX = Math.floor(Math.random() * maxX);
+            const newY = Math.floor(Math.random() * maxY);
+            
+            // 设置按钮位置
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+            
+            isMoving = true;
+            setTimeout(() => isMoving = false, 300);
+            
+            // 缩小按钮
+            currentWidth = Math.max(40, currentWidth * 0.9);
+            currentHeight = Math.max(20, currentHeight * 0.9);
+            currentFontSize = Math.max(0.5, currentFontSize * 0.9);
+            
+            noBtn.style.width = `${currentWidth}px`;
+            noBtn.style.height = `${currentHeight}px`;
+            noBtn.style.fontSize = `${currentFontSize}rem`;
+            
+            // 调整按钮内边距
+            const paddingX = Math.max(4, currentWidth * 0.1);
+            const paddingY = Math.max(2, currentHeight * 0.1);
+            noBtn.style.padding = `${paddingY}px ${paddingX}px`;
+        });
+        
+        // 窗口大小改变时重置不愿意按钮位置
+        window.addEventListener('resize', () => {
+            if (!noBtn.classList.contains('hidden')) {
+                noBtn.style.position = 'static';
+            }
+        });
+    </script>
 </body>
 </html>
