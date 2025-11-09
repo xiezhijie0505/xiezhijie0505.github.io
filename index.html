@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="mt-4 text-gray-600 text-sm">
-                <p>✅ 考研人建议起床时间：6:30-7:00</p>
+                <p>✅ 考研人建议起床时间：8:00</p>
                 <p>✅ 早起后喝一杯温水，开启高效学习！</p>
             </div>
         </section>
@@ -96,7 +96,7 @@
                 <h2 class="text-2xl font-bold text-mushroom-brown">早睡提醒 🌙</h2>
             </div>
             <div class="text-center py-4">
-                <p class="text-xl mb-2">理想睡眠时间：23:00前</p>
+                <p class="text-xl mb-2">理想睡眠时间：1:00前</p>
                 <div id="sleepCountdown" class="text-2xl font-bold text-mushroom-pink my-4"></div>
                 <button id="sleepReminder" class="bg-mushroom-pink hover:bg-mushroom-pink/90 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors">
                     设置睡前提醒
@@ -238,7 +238,7 @@
             if (diff > 0) {
                 const hours = Math.floor(diff / 3600000);
                 const minutes = Math.floor((diff % 3600000) / 60000);
-                sleepCountdownEl.textContent = `距离23点还有：${hours}小时${minutes}分钟`;
+                sleepCountdownEl.textContent = `距离1点还有：${hours}小时${minutes}分钟`;
             } else {
                 sleepCountdownEl.textContent = `今天也要早点休息呀～`;
             }
@@ -285,6 +285,7 @@
             '早餐：燕麦粥+坚果+香蕉 | 午餐：红薯+西兰花炒虾仁+豆腐汤 | 晚餐：蔬菜面+鸡蛋+香菇',
             '早餐：豆浆+包子+凉拌海带丝 | 午餐：米饭+番茄炒蛋+清炒油麦菜 | 晚餐：杂粮粥+清蒸排骨+凉拌黄瓜',
             '早餐：牛奶+三明治（火腿+生菜） | 午餐：荞麦面+牛肉+青菜 | 晚餐：小米粥+炒菌菇+白煮蛋'
+            '非预制烤肉饭‘，’麻拐‘
         ];
         randomMeal.addEventListener('click', () => {
             const randomMeal = mealOptions[Math.floor(Math.random() * mealOptions.length)];
@@ -367,3 +368,4 @@
     </script>
 </body>
 </html>
+
