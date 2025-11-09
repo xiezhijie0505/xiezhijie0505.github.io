@@ -1,174 +1,369 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小六六愿意和我打王者吗？</title>
+    <title>菌菇大王的考研自律小助手🍄</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
-    <!-- 配置Tailwind自定义颜色和字体 -->
     <script>
+        // 配置Tailwind自定义主题
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#6C5CE7',
-                        secondary: '#FD79A8',
-                        happy: '#00B894',
-                        sad: '#D63031'
+                        mushroom: {
+                            pink: '#FF7E95',
+                            yellow: '#FFE066',
+                            green: '#8CD979',
+                            brown: '#A67C52',
+                            light: '#F5F3E7'
+                        },
                     },
                     fontFamily: {
-                        game: ['"Comic Sans MS"', '"Marker Felt"', 'sans-serif']
-                    }
+                        cute: ['"Comic Sans MS"', '"Bubblegum Sans"', 'cursive'],
+                    },
                 }
             }
         }
     </script>
-    
     <style type="text/tailwindcss">
         @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .btn-bounce {
-                animation: bounce 0.5s ease infinite alternate;
-            }
             .text-shadow {
-                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             }
-            .scale-transition {
-                transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, font-size 0.3s ease;
+            .animate-bounce-slow {
+                animation: bounce 2s infinite;
             }
-        }
-        
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
-        
-        @keyframes celebrate {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        .celebration {
-            animation: celebrate 0.5s ease-out forwards;
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-50 to-pink-50 min-h-screen flex flex-col items-center justify-center p-4 font-game">
-    <!-- 标题区域 -->
-    <div class="text-center mb-10">
-        <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-primary text-shadow mb-4">
-            小六六愿意和我打王者吗？
-        </h1>
-        <p class="text-gray-600 text-lg">
-            <i class="fa fa-gamepad text-secondary mr-2"></i>
-            快来做出你的选择吧！
-        </p>
-    </div>
-    
-    <!-- 按钮区域 -->
-    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-10">
-        <!-- 愿意按钮 -->
-        <button id="yesBtn" class="bg-happy hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-xl shadow-lg transform hover:scale-105 transition-all duration-300 btn-bounce">
-            <i class="fa fa-smile-o mr-2"></i>愿意
-        </button>
-        
-        <!-- 不愿意按钮 -->
-        <button id="noBtn" class="bg-sad hover:bg-red-600 text-white font-bold py-4 px-10 rounded-full text-xl shadow-lg transform hover:scale-105 transition-all duration-300 scale-transition" 
-                style="width: 160px; height: 60px; font-size: 1.25rem;">
-            <i class="fa fa-frown-o mr-2"></i>不愿意
-        </button>
-    </div>
-    
-    <!-- 结果显示区域 -->
-    <div id="result" class="hidden text-center mt-8">
-        <div class="celebration">
-            <h2 class="text-[clamp(1.5rem,4vw,2.5rem)] font-bold text-happy mb-4">
-                <i class="fa fa-star text-yellow-400 animate-pulse"></i>
-                太棒了！高手带我飞！
-                <i class="fa fa-star text-yellow-400 animate-pulse"></i>
-            </h2>
-            <div class="flex justify-center gap-4 mt-6">
-                <i class="fa fa-trophy text-yellow-500 text-5xl"></i>
-                <i class="fa fa-fire text-orange-500 text-5xl"></i>
-                <i class="fa fa-bolt text-blue-500 text-5xl"></i>
+<body class="bg-mushroom-light min-h-screen font-cute text-gray-800">
+    <!-- 顶部标题 -->
+    <header class="py-6 px-4 bg-gradient-to-r from-mushroom-pink to-mushroom-yellow text-white shadow-md">
+        <div class="container mx-auto flex flex-col items-center">
+            <h1 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold text-shadow flex items-center">
+                <i class="fa fa-pagelines mr-3 animate-bounce-slow"></i>
+                菌菇大王的考研自律小助手
+                <i class="fa fa-pagelines ml-3 animate-bounce-slow"></i>
+            </h1>
+            <p class="mt-2 text-[clamp(1rem,2vw,1.2rem)] opacity-90">早睡早起 + 好好吃饭 + 答辩顺利 = 上岸成功！🍄</p>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="container mx-auto py-8 px-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 1. 起床打卡卡片 -->
+        <section class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 rounded-full bg-mushroom-yellow flex items-center justify-center text-white mr-4">
+                    <i class="fa fa-sun-o text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-mushroom-brown">早起打卡 🌞</h2>
+            </div>
+            <div class="text-center py-4">
+                <p id="wakeUpTime" class="text-xl mb-4">当前时间：<span class="font-bold"></span></p>
+                <button id="wakeUpCheckIn" class="bg-mushroom-yellow hover:bg-mushroom-yellow/90 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors">
+                    我已早起打卡！
+                </button>
+                <div id="wakeUpSuccess" class="mt-4 hidden">
+                    <p class="text-mushroom-green text-xl font-bold flex items-center justify-center">
+                        <i class="fa fa-check-circle mr-2"></i> 太棒啦！菌菇大王今天也是元气满满的一天～
+                    </p>
+                    <img src="https://picsum.photos/id/237/200/100" alt="可爱菌菇" class="rounded-lg mt-2 mx-auto">
+                </div>
+            </div>
+            <div class="mt-4 text-gray-600 text-sm">
+                <p>✅ 考研人建议起床时间：6:30-7:00</p>
+                <p>✅ 早起后喝一杯温水，开启高效学习！</p>
+            </div>
+        </section>
+
+        <!-- 2. 早睡提醒卡片 -->
+        <section class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 rounded-full bg-mushroom-pink flex items-center justify-center text-white mr-4">
+                    <i class="fa fa-moon-o text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-mushroom-brown">早睡提醒 🌙</h2>
+            </div>
+            <div class="text-center py-4">
+                <p class="text-xl mb-2">理想睡眠时间：23:00前</p>
+                <div id="sleepCountdown" class="text-2xl font-bold text-mushroom-pink my-4"></div>
+                <button id="sleepReminder" class="bg-mushroom-pink hover:bg-mushroom-pink/90 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors">
+                    设置睡前提醒
+                </button>
+                <div id="sleepReminderSuccess" class="mt-4 hidden">
+                    <p class="text-mushroom-green text-xl font-bold flex items-center justify-center">
+                        <i class="fa fa-bell mr-2"></i> 提醒已设置！到点会通知你放下手机哦～
+                    </p>
+                </div>
+            </div>
+            <div class="mt-4 text-gray-600 text-sm">
+                <p>✅ 睡前1小时远离电子屏幕</p>
+                <p>✅ 保证7-8小时睡眠，记忆力更好！</p>
+            </div>
+        </section>
+
+        <!-- 3. 饮食建议卡片 -->
+        <section class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 rounded-full bg-mushroom-green flex items-center justify-center text-white mr-4">
+                    <i class="fa fa-cutlery text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-mushroom-brown">好好吃饭 🥗</h2>
+            </div>
+            <div class="mb-4">
+                <p class="text-lg mb-3">考研人每日饮食搭配建议：</p>
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                    <div class="bg-mushroom-green/10 p-3 rounded-lg text-center">
+                        <p class="font-bold text-mushroom-green">蛋白质</p>
+                        <p class="text-sm">鸡蛋/牛奶/瘦肉</p>
+                    </div>
+                    <div class="bg-mushroom-yellow/10 p-3 rounded-lg text-center">
+                        <p class="font-bold text-mushroom-yellow">碳水</p>
+                        <p class="text-sm">杂粮/红薯/燕麦</p>
+                    </div>
+                    <div class="bg-mushroom-pink/10 p-3 rounded-lg text-center">
+                        <p class="font-bold text-mushroom-pink">蔬菜</p>
+                        <p class="text-sm">绿叶菜/菌菇类</p>
+                    </div>
+                </div>
+                <button id="randomMeal" class="w-full bg-mushroom-green hover:bg-mushroom-green/90 text-white font-bold py-3 rounded-xl shadow-md transition-colors">
+                    随机生成今日食谱
+                </button>
+            </div>
+            <div id="mealResult" class="mt-4 p-3 bg-gray-50 rounded-lg hidden">
+                <p class="font-bold text-center mb-2">今日推荐食谱：</p>
+                <p id="mealText" class="text-center"></p>
+            </div>
+        </section>
+
+        <!-- 4. 答辩准备卡片 -->
+        <section class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 rounded-full bg-mushroom-brown flex items-center justify-center text-white mr-4">
+                    <i class="fa fa-graduation-cap text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-mushroom-brown">答辩顺利 🎓</h2>
+            </div>
+            <div class="text-center py-4">
+                <div class="mb-4">
+                    <label for="defenseDate" class="text-lg mr-2">答辩日期：</label>
+                    <input type="date" id="defenseDate" class="p-2 border border-gray-300 rounded-lg font-cute">
+                </div>
+                <div id="defenseCountdown" class="text-2xl font-bold text-mushroom-brown my-4">
+                    请选择答辩日期
+                </div>
+                <button id="cheerUp" class="bg-mushroom-brown hover:bg-mushroom-brown/90 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors">
+                    来点打气鼓励！
+                </button>
+                <div id="cheerText" class="mt-4 p-3 bg-mushroom-brown/10 rounded-lg hidden">
+                    <p class="text-xl font-bold text-mushroom-brown"></p>
+                </div>
+            </div>
+            <div class="mt-4 text-gray-600 text-sm">
+                <p>✅ 提前3天模拟答辩，熟悉流程</p>
+                <p>✅ 重点复习论文核心观点和创新点</p>
+                <p>✅ 保持自信，菌菇大王最棒！</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部统计 -->
+    <footer class="bg-mushroom-brown text-white py-6 px-4 mt-8">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div>
+                    <h3 class="text-xl font-bold mb-2">早起打卡次数</h3>
+                    <p id="wakeUpCount" class="text-3xl">0</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">早睡提醒次数</h3>
+                    <p id="sleepCount" class="text-3xl">0</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">距离答辩</h3>
+                    <p id="footerDefenseCountdown" class="text-3xl">-- 天</p>
+                </div>
+            </div>
+            <div class="mt-6 text-center text-sm opacity-80">
+                <p>🍄 菌菇大王的考研自律小助手 | 祝上岸成功，答辩顺利！🍄</p>
             </div>
         </div>
-    </div>
-    
-    <!-- 王者背景图 -->
-    <div class="absolute bottom-0 right-0 w-40 h-40 opacity-10 pointer-events-none">
-        <i class="fa fa-gamepad text-[10rem] text-primary/20"></i>
-    </div>
+    </footer>
 
     <script>
-        // 获取DOM元素
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById('noBtn');
-        const result = document.getElementById('result');
-        
-        // 初始按钮大小和位置
-        let currentWidth = 160;
-        let currentHeight = 60;
-        let currentFontSize = 1.25;
-        let isMoving = false;
-        
-        // "愿意"按钮点击事件
-        yesBtn.addEventListener('click', () => {
-            // 隐藏按钮，显示结果
-            yesBtn.classList.add('hidden');
-            noBtn.classList.add('hidden');
-            result.classList.remove('hidden');
-            
-            // 播放庆祝音效（可选）
-            // const audio = new Audio('celebration.mp3');
-            // audio.play().catch(e => console.log('无法播放音效:', e));
-        });
-        
-        // "不愿意"按钮鼠标悬停事件 - 让按钮移动
-        noBtn.addEventListener('mouseover', () => {
-            if (isMoving) return;
-            
-            // 随机生成新位置，确保按钮在可视范围内
-            const maxX = window.innerWidth - currentWidth - 40;
-            const maxY = window.innerHeight - currentHeight - 40;
-            
-            const newX = Math.floor(Math.random() * maxX);
-            const newY = Math.floor(Math.random() * maxY);
-            
-            // 设置按钮位置
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = `${newX}px`;
-            noBtn.style.top = `${newY}px`;
-            
-            isMoving = true;
-            setTimeout(() => isMoving = false, 300);
-            
-            // 缩小按钮
-            currentWidth = Math.max(40, currentWidth * 0.9);
-            currentHeight = Math.max(20, currentHeight * 0.9);
-            currentFontSize = Math.max(0.5, currentFontSize * 0.9);
-            
-            noBtn.style.width = `${currentWidth}px`;
-            noBtn.style.height = `${currentHeight}px`;
-            noBtn.style.fontSize = `${currentFontSize}rem`;
-            
-            // 调整按钮内边距
-            const paddingX = Math.max(4, currentWidth * 0.1);
-            const paddingY = Math.max(2, currentHeight * 0.1);
-            noBtn.style.padding = `${paddingY}px ${paddingX}px`;
-        });
-        
-        // 窗口大小改变时重置不愿意按钮位置
-        window.addEventListener('resize', () => {
-            if (!noBtn.classList.contains('hidden')) {
-                noBtn.style.position = 'static';
+        // 初始化本地存储
+        if (!localStorage.getItem('wakeUpCount')) localStorage.setItem('wakeUpCount', 0);
+        if (!localStorage.getItem('sleepCount')) localStorage.setItem('sleepCount', 0);
+        if (!localStorage.getItem('defenseDate')) localStorage.setItem('defenseDate', '');
+
+        // DOM元素
+        const wakeUpCheckIn = document.getElementById('wakeUpCheckIn');
+        const wakeUpSuccess = document.getElementById('wakeUpSuccess');
+        const wakeUpCountEl = document.getElementById('wakeUpCount');
+        const sleepReminder = document.getElementById('sleepReminder');
+        const sleepReminderSuccess = document.getElementById('sleepReminderSuccess');
+        const sleepCountEl = document.getElementById('sleepCount');
+        const randomMeal = document.getElementById('randomMeal');
+        const mealResult = document.getElementById('mealResult');
+        const mealText = document.getElementById('mealText');
+        const defenseDate = document.getElementById('defenseDate');
+        const defenseCountdown = document.getElementById('defenseCountdown');
+        const footerDefenseCountdown = document.getElementById('footerDefenseCountdown');
+        const cheerUp = document.getElementById('cheerUp');
+        const cheerText = document.getElementById('cheerText');
+        const wakeUpTimeEl = document.getElementById('wakeUpTime').querySelector('span');
+        const sleepCountdownEl = document.getElementById('sleepCountdown');
+
+        // 更新当前时间
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            wakeUpTimeEl.textContent = timeStr;
+
+            // 计算距离23点的时间（早睡提醒倒计时）
+            const sleepTime = new Date(now);
+            sleepTime.setHours(23, 0, 0, 0);
+            const diff = sleepTime - now;
+            if (diff > 0) {
+                const hours = Math.floor(diff / 3600000);
+                const minutes = Math.floor((diff % 3600000) / 60000);
+                sleepCountdownEl.textContent = `距离23点还有：${hours}小时${minutes}分钟`;
+            } else {
+                sleepCountdownEl.textContent = `今天也要早点休息呀～`;
             }
+        }
+
+        // 早起打卡
+        wakeUpCheckIn.addEventListener('click', () => {
+            let count = parseInt(localStorage.getItem('wakeUpCount')) + 1;
+            localStorage.setItem('wakeUpCount', count);
+            wakeUpCountEl.textContent = count;
+            wakeUpSuccess.classList.remove('hidden');
+            
+            // 3秒后隐藏成功提示
+            setTimeout(() => {
+                wakeUpSuccess.classList.add('hidden');
+            }, 3000);
         });
+
+        // 早睡提醒设置
+        sleepReminder.addEventListener('click', () => {
+            let count = parseInt(localStorage.getItem('sleepCount')) + 1;
+            localStorage.setItem('sleepCount', count);
+            sleepCountEl.textContent = count;
+            sleepReminderSuccess.classList.remove('hidden');
+            
+            // 模拟设置提醒（实际项目可对接Notification API）
+            setTimeout(() => {
+                sleepReminderSuccess.classList.add('hidden');
+                if (Notification.permission === 'granted') {
+                    new Notification('早睡提醒', { body: '菌菇大王，该放下手机准备睡觉啦～' });
+                } else if (Notification.permission !== 'denied') {
+                    Notification.requestPermission().then(perm => {
+                        if (perm === 'granted') {
+                            new Notification('早睡提醒', { body: '菌菇大王，该放下手机准备睡觉啦～' });
+                        }
+                    });
+                }
+            }, 3000);
+        });
+
+        // 随机食谱生成
+        const mealOptions = [
+            '早餐：水煮蛋+牛奶+全麦面包 | 午餐：杂粮饭+清炒时蔬+鸡胸肉 | 晚餐：小米粥+凉拌黄瓜+清蒸鱼',
+            '早餐：燕麦粥+坚果+香蕉 | 午餐：红薯+西兰花炒虾仁+豆腐汤 | 晚餐：蔬菜面+鸡蛋+香菇',
+            '早餐：豆浆+包子+凉拌海带丝 | 午餐：米饭+番茄炒蛋+清炒油麦菜 | 晚餐：杂粮粥+清蒸排骨+凉拌黄瓜',
+            '早餐：牛奶+三明治（火腿+生菜） | 午餐：荞麦面+牛肉+青菜 | 晚餐：小米粥+炒菌菇+白煮蛋'
+        ];
+        randomMeal.addEventListener('click', () => {
+            const randomMeal = mealOptions[Math.floor(Math.random() * mealOptions.length)];
+            mealText.textContent = randomMeal;
+            mealResult.classList.remove('hidden');
+        });
+
+        // 答辩倒计时计算
+        function calculateDefenseCountdown() {
+            const selectedDate = localStorage.getItem('defenseDate');
+            if (!selectedDate) return;
+            
+            const now = new Date();
+            const defense = new Date(selectedDate);
+            const diffTime = defense - now;
+            
+            if (diffTime < 0) {
+                defenseCountdown.textContent = '答辩已结束！🎉';
+                footerDefenseCountdown.textContent = '已结束';
+            } else {
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                defenseCountdown.textContent = `距离答辩还有：${diffDays} 天`;
+                footerDefenseCountdown.textContent = `${diffDays} 天`;
+            }
+        }
+
+        // 答辩日期选择
+        defenseDate.addEventListener('change', () => {
+            localStorage.setItem('defenseDate', defenseDate.value);
+            calculateDefenseCountdown();
+        });
+
+        // 打气鼓励文本
+        const cheerTexts = [
+            '菌菇大王的论文超棒的！答辩一定顺顺利利～',
+            '自信就是最好的武器，你已经准备得很充分啦！',
+            '老师都会喜欢你的研究，大胆表达就好！',
+            '考研都熬过来了，答辩对你来说小菜一碟～',
+            '加油！答辩结束就是胜利的曙光！',
+            '菌菇大王最棒！上岸+答辩双丰收！'
+        ];
+        cheerUp.addEventListener('click', () => {
+            const randomCheer = cheerTexts[Math.floor(Math.random() * cheerTexts.length)];
+            cheerText.querySelector('p').textContent = randomCheer;
+            cheerText.classList.remove('hidden');
+            
+            // 5秒后隐藏
+            setTimeout(() => {
+                cheerText.classList.add('hidden');
+            }, 5000);
+        });
+
+        // 初始化页面
+        function initPage() {
+            // 更新统计数据
+            wakeUpCountEl.textContent = localStorage.getItem('wakeUpCount');
+            sleepCountEl.textContent = localStorage.getItem('sleepCount');
+            
+            // 设置已选的答辩日期
+            const savedDefenseDate = localStorage.getItem('defenseDate');
+            if (savedDefenseDate) {
+                defenseDate.value = savedDefenseDate;
+            }
+            
+            // 计算答辩倒计时
+            calculateDefenseCountdown();
+            
+            // 更新当前时间（每秒更新一次）
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 1000);
+            
+            // 请求通知权限
+            if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                Notification.requestPermission();
+            }
+        }
+
+        // 页面加载完成后初始化
+        window.addEventListener('load', initPage);
     </script>
 </body>
 </html>
