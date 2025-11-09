@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -46,7 +45,13 @@
         }
     </style>
 </head>
-<body class="bg-mushroom-light min-h-screen font-cute text-gray-800">
+<!-- 背景图已改为 baba.jpg（确保图片已上传到仓库根目录） -->
+<body class="min-h-screen font-cute text-gray-800 bg-cover bg-center bg-fixed relative">
+    <!-- 半透明遮罩（可调整透明度：0.7改为0.5更透明，0.9更不透明） -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.7); z-index: -1;"></div>
+    <!-- 背景图：已替换为 baba.jpg -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('baba.jpg'); background-size: cover; background-position: center; z-index: -2;"></div>
+
     <!-- 顶部标题 -->
     <header class="py-6 px-4 bg-gradient-to-r from-mushroom-pink to-mushroom-yellow text-white shadow-md">
         <div class="container mx-auto flex flex-col items-center">
@@ -231,9 +236,13 @@
             const timeStr = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             wakeUpTimeEl.textContent = timeStr;
 
-            // 计算距离23点的时间（早睡提醒倒计时）
+            // 计算距离1点的时间（早睡提醒倒计时，修复原逻辑错误）
             const sleepTime = new Date(now);
-            sleepTime.setHours(23, 0, 0, 0);
+            // 如果当前时间已经过了1点，就计算到第二天1点
+            if (now.getHours() >= 1) {
+                sleepTime.setDate(sleepTime.getDate() + 1);
+            }
+            sleepTime.setHours(1, 0, 0, 0);
             const diff = sleepTime - now;
             if (diff > 0) {
                 const hours = Math.floor(diff / 3600000);
@@ -279,13 +288,14 @@
             }, 3000);
         });
 
-        // 随机食谱生成
+        // 随机食谱生成（修复语法错误：补充逗号，调整格式）
         const mealOptions = [
             '早餐：水煮蛋+牛奶+全麦面包 | 午餐：杂粮饭+清炒时蔬+鸡胸肉 | 晚餐：小米粥+凉拌黄瓜+清蒸鱼',
             '早餐：燕麦粥+坚果+香蕉 | 午餐：红薯+西兰花炒虾仁+豆腐汤 | 晚餐：蔬菜面+鸡蛋+香菇',
             '早餐：豆浆+包子+凉拌海带丝 | 午餐：米饭+番茄炒蛋+清炒油麦菜 | 晚餐：杂粮粥+清蒸排骨+凉拌黄瓜',
-            '早餐：牛奶+三明治（火腿+生菜） | 午餐：荞麦面+牛肉+青菜 | 晚餐：小米粥+炒菌菇+白煮蛋'
-            '非预制烤肉饭‘，’麻拐‘
+            '早餐：牛奶+三明治（火腿+生菜） | 午餐：荞麦面+牛肉+青菜 | 晚餐：小米粥+炒菌菇+白煮蛋',
+            '非预制烤肉饭',
+            '麻拐'
         ];
         randomMeal.addEventListener('click', () => {
             const randomMeal = mealOptions[Math.floor(Math.random() * mealOptions.length)];
@@ -368,4 +378,3 @@
     </script>
 </body>
 </html>
-
